@@ -63,7 +63,6 @@
       margin: 0;
       width: 100%;
       transition: transform 0.5s;
-      border: 1px solid red;
       flex: 1 0 auto;
       display: flex;
       justify-content: center;
@@ -98,7 +97,13 @@
     }
 
     .panel.open {
+      flex: 5;
       font-size: 40px;
+    }
+
+    .cta {
+      color: white;
+      text-decoration: none;
     }
 
   </style>
@@ -133,6 +138,23 @@
   </div>
 
   <script>
+  const panels = document.querySelectorAll(".panel");
+
+  function toggleOpen() {
+      this.classList.toggle("open");
+  }
+
+  function toggleActive(e) {
+      console.log(e.propertyName);
+      if(e.propertyName.includes("flex")) {
+          this.classList.toggle("open-active");
+      }
+  }
+
+      panels.forEach(panel => panel.addEventListener("click", toggleOpen)); // open panel
+      panels.forEach(panel => panel.addEventListener("transitionend", toggleActive)); // toggles open-active
+
+      // doing toggleOpen() would make it run on page load, which we don't want
 
   </script>
 
