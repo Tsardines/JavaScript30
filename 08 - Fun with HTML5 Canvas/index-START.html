@@ -5,12 +5,72 @@
   <title>HTML5 Canvas</title>
 </head>
 <body>
-<canvas id="draw" width="800" height="800"></canvas>
+<canvas id="draw" width="800" height="800"></canvas> <!-- you draw on the context, not the canvas itself -->
 <script>
+
+  let canvas = document.querySelector("#draw"),
+      ctx = canvas.getContext("2d");
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      ctx.strokeStyle = "#BADA55";
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round"; // draws with a circle
+      ctx.lineWidth = 70;
+      // ctx.globalCompositeOperation = "multiply"; // drawing effect of "multiply"
+
+  let isDrawing = false, // "do we draw to this canvas, or is someone just moving their mouse?"
+      lastX = 0, // line start
+      lastY = 0, // where the line ends
+      hue = Math.floor(Math.random() * 359),
+      direction = true; // the stroke will be "building up"
+
+  function draw(e) {
+    if (!isDrawing) {
+      return; // will stop the function from running when the mouse is not down
+    }
+    // console.log(e);
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY); // "start from 0"
+    ctx.lineTo(e.offsetX, e.offsetY); // "go to wherever the mouse has clicked"
+    ctx.stroke();
+    [lastX, lastY] = [e.offsetX, e.offsetY]
+    hue++; // this increments the hue, from red all the way down the rainbow
+    if(hue >= 360) {
+      hue = 0; // resets the hue
+    }
+      console.log(hue)
+
+    if(ctx.lineWidth >= 100 || ctx.lineWidth <= 1) { // if > than 100, flip the direction
+      direction = !direction; // flips the direction
+    }
+
+    if(direction) {
+      ctx.lineWidth++; // 0 - 100
+    } else {
+      ctx.lineWidth--; // 100 - 0
+    }
+
+    // offsetX and Y come from the actual event (console.log(e)) that happens
+  }
+
+  canvas.addEventListener("mousedown", (e) => {
+    isDrawing = true;
+    [lastX, lastY] = [e.offsetX, e.offsetY] // putting this here will put us where we want to go rather than starting at 0
+  })
+
+  canvas.addEventListener("mousemove", draw);
+  canvas.addEventListener("mouseup", () => isDrawing = false);
+  canvas.addEventListener("mouseout", () => isDrawing = false);
+
+
 </script>
 
 <style>
   html, body {
+    background-color: rgb(43, 43, 43);
     margin: 0;
   }
 </style>
