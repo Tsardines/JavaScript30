@@ -18,28 +18,60 @@
     }
 
     // Regular
+    console.log("hey");
 
     // Interpolated
+    console.log("hey, I'm a %s string!", "&")
+    // the % will be replaced by the &
+    //console.log(`"hey I'm a ${var}"`) // this is better
 
     // Styled
+    console.log("%c I'm cool", "font-size:2rem")
 
     // warning!
+    console.warn("shit");
 
     // Error :|
+    console.error("damn");
+    // will give stack trace
 
     // Info
+    console.info("People who live in glass houses...")
 
     // Testing
+    // console.assert(1 === 1, "that is wrong")
+    // will only fire if something is wrong/false
+    let p = document.querySelector("p");
+    console.assert(p.classList.contains('oh'), "that is wrong")
 
     // clearing
+    // console.clear(); // clears the console
 
     // Viewing DOM Elements
+    console.log(p); // shows actual elem
+    console.dir(p); // gives a list of methods that can be used
 
     // Grouping together
+    // dogs.forEach(dog => {
+    //     console.group(`${dog.name}`);
+    //     console.log(`this is ${dog.name}`);
+    //     console.log(`${dog.name} is ${dog.age} years old`);
+    // })
+    // can also do groupCollapsed
 
     // counting
+    console.count('Wes');
+    // how many times it appears
 
     // timing
+    // how long it takes to retrieve data
+    console.time("fetching data");
+    fetch("https://api.github.com/users/Tsardines")
+        .then(data => data.json())
+        .then(data => {
+            console.timeEnd("fetching data");
+            console.log(data);
+        })
 
   </script>
 </body>
