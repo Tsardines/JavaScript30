@@ -6,7 +6,24 @@
   <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
 </head>
 <body>
+  
 <script>
+
+const pressed = [],
+  secretCode = 'geralt';
+
+window.addEventListener('keyup', (e) => {
+  pressed.push(e.key);
+  pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length) // starts from the back
+
+  if(pressed.join('') // joins into a string
+    .includes(secretCode)) { // 'geralt', in that order
+      cornify_add();
+      console.log('ding ding')
+  }
+  console.log(pressed);
+})
+
 </script>
 </body>
 </html>
